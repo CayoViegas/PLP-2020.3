@@ -29,6 +29,17 @@ getSintomasProduto Produto {sintomasProduto = s} = s
 getValidade :: Produto -> String
 getValidade Produto {validade = v} = v
 
+setPreco :: [Produto] -> Int -> Double -> Maybe [Produto]
+setPreco [] x novoPreco = Nothing
+setPreco (c:cs) x novoPreco
+    | idAtual == x = Just ([Produto x nomeProdutoAtual novoPreco sintomasProdutoAtual validadeAtual] ++ cs)
+    | otherwise = setPreco cs x novoPreco
+    where
+        idAtual = getIdProduto c
+        nomeProdutoAtual = getNomeProduto c
+        sintomasProdutoAtual = getSintomasProduto c
+        validadeAtual = getValidade c
+
 produtoToString :: Produto -> String
 produtoToString Produto {idProduto = i, nomeProduto = n, preco = p, sintomasProduto = s, validade = v} = show i ++"," ++ n ++ "," ++ show p ++ "," ++ sintomasToString s ++ "," ++ v
 
